@@ -1,4 +1,4 @@
-let sessions = require('../mocks/mocks-data/sessions-data')
+let sessions = require('../mocks-data/sessions-data')
 
 
 Date.prototype.addDays = function(days) {

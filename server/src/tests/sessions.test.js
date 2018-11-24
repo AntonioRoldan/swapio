@@ -1,4 +1,4 @@
-const sessions = require('../modules/mocks/sessions')
+const sessions = require('../modules/mocks/mocks-modules/sessions')
 
 const s = obj => JSON.stringify(obj, null, 2)
 
