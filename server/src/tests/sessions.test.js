@@ -24,7 +24,7 @@ describe('Session methods', () => {
     expect(sessions.checkSession('michael@hotmail.com', '132452')).toBe(false) //If a session does not exist, it has already expired therefore the function returns false 
     done()
   })
-  test('Gettint an email via APIkey', done => {
+  test('Getting an email via APIkey', done => {
     const APIkey = 't4s92gw5-1331-240f-3216-g2x1j7j921hp'
     expect(sessions.emailFromSession(APIkey)).toBe('Palpatine@senate.com')
     done()
