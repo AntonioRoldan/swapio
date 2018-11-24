@@ -32,4 +32,4 @@ function registerUser(email, password, callback) { //tested
   })
 }
 
-module.exports = {registerUser}
+module.exports = {registerUser, logoutUser}

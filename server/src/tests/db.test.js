@@ -13,4 +13,10 @@ describe('User registration', () => {
           done()
       })
   })
+  test('Logout user', done => {
+      db.logoutUser('d6f85ab4-8288-440c-8061-f3b2f5c050dc', (_, message) => {
+          expect(message).toBe('Success')
+          done()
+      })
+  })
 })

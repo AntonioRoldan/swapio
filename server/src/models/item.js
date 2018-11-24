@@ -16,5 +16,5 @@ const itemSchema = new mongoose.Schema({
     }
 })
 
-const Session = mongoose.model('Session', sessionSchema)
-module.exports = Session
+const Item = mongoose.model('Item', itemSchema)
+module.exports = Item
