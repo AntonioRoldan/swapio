@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "jest tests --forceExit --detectOpenHandles"
+    "test": "clear && node src/supertests/server.test.js && jest tests --forceExit --detectOpenHandles"
   },
   "author": "",
   "license": "ISC",

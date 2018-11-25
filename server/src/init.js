@@ -18,9 +18,9 @@ db.once('open', () => {
   })
   sessionMocks.map(sessionDef => {
     const sess = new Session(sessionDef)
-    sess.save((err, u) => {
+    sess.save((err, s) => {
       if(err) console.error(err)
-      console.log('added', sess)
+      console.log('added', s)
     })
   })
 })
