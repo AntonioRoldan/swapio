@@ -48,31 +48,30 @@ function addItem(email, title, description, imgurl, callback) {
 }
 
 async function findMySwaps(currentUserEmail, callback) {
-    let matches = []
+    let swaps = []
 
     const currentUser = (await User.find({email: currentUserEmail}))[0]
 
     const users = await User.find({})
 
+    // for every user
     for (const user of users) {
-        for (const hasId of (await Item.find({email: user.email}))) {
-            const item = await Item.findById(hasId)
+        // for every item every user has
+        for (const item of (await Item.find({email: user.email}))) {
 
+            // for items the logged in user wants
             for (const wantsTitle of currentUser.userWants) {
+                // if the current user wants that item then check reverse trades
                 if (item.title == wantsTitle) {
 
-                    let currentUserHas
-                    try {
-                        currentUserHas = await Item.find({email: currentUserEmail})
-                    } catch (err) {
-                        throw new Error(err)
-                    }
+                    // for item you have
+                    for (const currentUserHasItem of (await Item.find({email: currentUserEmail}))) {
 
-                    for (const currentUserHasItem of currentUserHas) {
+                        // if looped user wants the item you have, push to swaps list
                         if (user.userWants.includes(currentUserHasItem.title)) {
-                            matches.push({
-                                swapItem: item,
-                                swapForItem: currentUserHasItem,
+                            swaps.push({
+                                yourItem: currentUserHasItem,
+                                theirItem: item,
                                 swapWithUser: {
                                     _id: user._id,
                                     email: user.email    
@@ -85,7 +84,7 @@ async function findMySwaps(currentUserEmail, callback) {
         }
     }
 
-    callback(false, matches)
+    callback(false, swaps)
 }
 
 function logoutUser(APIkey, callback) { 
