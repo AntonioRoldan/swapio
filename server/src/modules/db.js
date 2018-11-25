@@ -33,6 +33,20 @@ function registerUser(email, password, callback) { //tested
   })
 }
 
+function addItem(email, title, description, imgurl, callback) {
+    i = new Item({
+        title: title,
+        description: description,
+        imgurl: imgurl,
+        email: email
+    })
+    i.save().then((itemData) => {
+        return callback(false, itemData)
+    }, e => {
+        return callback(500, e.message)
+    })
+}
+
 function logoutUser(APIkey, callback) { 
     sessions.getSession(APIkey, session => {
         if (session) {
