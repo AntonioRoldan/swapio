@@ -25,6 +25,13 @@ app.post('/logout', (req, res) => {
     })
 })
 
+app.post('/login', (req, res) => { //?
+    db.loginUser(req.body.email, req.body.password, (error, result) => {
+        if(error) return res.status(error).send(result)
+        return res.send(result)
+    })
+})
+
 app.get('/ping', (_, res) => {
     res.send('pong')
 })
