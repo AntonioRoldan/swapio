@@ -43,6 +43,10 @@ function logoutUser(APIkey, callback) {
     })
 }
 
+function checkSession(APIkey, callback) {
+    sessions.getSession(APIkey, session => callback(session))
+}
+
 function whoAmI(APIkey, callback) { 
     sessions.emailFromSession(APIkey, email => {
         if (email) return callback(false, email)

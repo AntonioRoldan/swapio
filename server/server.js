@@ -39,6 +39,13 @@ app.get('/who-am-i', (req, res) => { //?
     })
 })
 
+app.post('/check-session', (req, res) => { //?
+    db.checkSession(req.body.session, session => {
+        return res.send(session)
+    })
+})
+
+
 app.get('/ping', (_, res) => {
     res.send('pong')
 })
