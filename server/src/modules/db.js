@@ -60,4 +60,4 @@ function loginUser(email, password, callback) {
     })
 }
 
-module.exports = {registerUser, logoutUser, loginUser}
+module.exports = {registerUser, logoutUser, loginUser, whoAmI}
