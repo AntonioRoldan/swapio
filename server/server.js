@@ -32,6 +32,13 @@ app.post('/login', (req, res) => { //?
     })
 })
 
+app.get('/who-am-i', (req, res) => { //?
+    db.whoAmI(req.headers.authorization, (err, result) => {
+        if(err) return res.status(err).send(result)
+        return res.send(result)
+    })
+})
+
 app.get('/ping', (_, res) => {
     res.send('pong')
 })

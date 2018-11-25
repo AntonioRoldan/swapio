@@ -43,6 +43,13 @@ function logoutUser(APIkey, callback) {
     })
 }
 
+function whoAmI(APIkey, callback) { 
+    sessions.emailFromSession(APIkey, email => {
+        if (email) return callback(false, email)
+        return callback(404, 'User not found')
+    })
+}
+
 function loginUser(email, password, callback) { 
     User.findOne({ email: email }, (err, user) => {
         if (err) return callback(500, 'Internal server error')
