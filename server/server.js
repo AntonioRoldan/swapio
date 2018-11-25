@@ -33,9 +33,20 @@ app.post('/login', (req, res) => { //?
 })
 
 app.get('/who-am-i', (req, res) => { //?
-    db.whoAmI(req.headers.authorization, (err, result) => {
-        if(err) return res.status(err).send(result)
-        return res.send(result)
+    db.whoAmI(req.headers.authorization, (err, email) => {
+        if(err) return res.status(err).send(email)
+        return res.send(email)
+    })
+})
+
+app.get('/my-swaps', (req, res) => {
+    db.whoAmI(req.headers.authorization, (err, email) => {
+        if(err) return res.status(err).send(email)
+
+        db.findMySwaps(email, (err, result) => {
+            if (err) return res.status(err).send(result)
+            return res.send(result)
+        })
     })
 })
 

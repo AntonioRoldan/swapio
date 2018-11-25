@@ -11,8 +11,7 @@ const itemSchema = new mongoose.Schema({
       type: String
     },
     imgurl: {
-        type: String,
-        required: true,
+        type: String
     },
     email: {
         type: String,

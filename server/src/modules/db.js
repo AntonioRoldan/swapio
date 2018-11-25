@@ -47,6 +47,47 @@ function addItem(email, title, description, imgurl, callback) {
     })
 }
 
+async function findMySwaps(currentUserEmail, callback) {
+    let matches = []
+
+    const currentUser = (await User.find({email: currentUserEmail}))[0]
+
+    const users = await User.find({})
+
+    for (const user of users) {
+        for (const hasId of (await Item.find({email: user.email}))) {
+            const item = await Item.findById(hasId)
+
+            for (const wantsTitle of currentUser.userWants) {
+                if (item.title == wantsTitle) {
+
+                    let currentUserHas
+                    try {
+                        currentUserHas = await Item.find({email: currentUserEmail})
+                    } catch (err) {
+                        throw new Error(err)
+                    }
+
+                    for (const currentUserHasItem of currentUserHas) {
+                        if (user.userWants.includes(currentUserHasItem.title)) {
+                            matches.push({
+                                swapItem: item,
+                                swapForItem: currentUserHasItem,
+                                swapWithUser: {
+                                    _id: user._id,
+                                    email: user.email    
+                                }
+                            })        
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    callback(false, matches)
+}
+
 function logoutUser(APIkey, callback) { 
     sessions.getSession(APIkey, session => {
         if (session) {
@@ -87,4 +128,12 @@ function loginUser(email, password, callback) {
     })
 }
 
-module.exports = {registerUser, logoutUser, loginUser, whoAmI, checkSession, addItem}
+module.exports = {
+    registerUser,
+    logoutUser,
+    loginUser,
+    whoAmI,
+    checkSession,
+    addItem,
+    findMySwaps
+}
