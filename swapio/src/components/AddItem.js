@@ -16,15 +16,23 @@ class AddItem extends Component {
         <Form>
           <FormGroup>
             <Label for="Title">Title</Label>
-            <Input type="email" name="email" id="exampleEmail" placeholder="give a title" />
+            <Input type="text" name="title" id="title" placeholder="Give a title" />
           </FormGroup>
+          <FormGroup controlId='formControlsDescription'>
+            <Label for="Description">Description</Label>
+            <Input
+              type='textarea'
+              placeholder='Write your description here'
+              id="description"
+              name='description'/>
+  			  </FormGroup>
           <FormGroup>
-            <Label for="examplePassword">Password</Label>
-            <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
+            <Label for="imgurl">Img url</Label>
+            <Input type="text" name="imgurl" id="imgurl" placeholder="Upload an image" />
           </FormGroup>
           <FormGroup>
             <Col className="text-right">
-              <Button>Register</Button>
+              <Button>Add to item list</Button>
             </Col>
           </FormGroup>
         </Form>

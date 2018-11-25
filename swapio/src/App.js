@@ -3,6 +3,7 @@ import './App.css'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Container } from 'reactstrap'
 import { Home, NavBar, Login, Register } from './components'
+import AddItem from './components/AddItem';
 
 class App extends Component {
   render () {
@@ -15,6 +16,7 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
+            <Route path="/addItem" component={AddItem}/>
           </Container>
         </div>
       </Router>
