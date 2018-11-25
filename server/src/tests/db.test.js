@@ -28,3 +28,24 @@ describe('User registration', () => {
       })
   })
 })
+
+describe('Item methods', () => {
+    test('Add item', done => {
+        const data = {
+            title: 'Potion',
+            description: 'Love potion',
+            imgurl: 'añosidhgñv',
+            email: 'Michael@hotmail.com'
+        }
+        db.addItem(data.email, data.title, data.description, data.imgurl, (_, itemData) => {
+            dataToBeCompared = {
+                title: itemData.title,
+                description: itemData.description,
+                imgurl: itemData.imgurl,
+                email: itemData.email
+            }
+            expect(s(dataToBeCompared)).toBe(s(data))
+            done()
+        })
+    })
+})

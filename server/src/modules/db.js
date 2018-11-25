@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const Item = require('../models/item')
 const validation = require('./validation')
 const sessions = require('./sessions')
 require('./mongoose')
@@ -31,6 +32,7 @@ function registerUser(email, password, callback) { //tested
       }
   })
 }
+
 function logoutUser(APIkey, callback) { 
     sessions.getSession(APIkey, session => {
         if (session) {
@@ -71,4 +73,4 @@ function loginUser(email, password, callback) {
     })
 }
 
-module.exports = {registerUser, logoutUser, loginUser, whoAmI}
+module.exports = {registerUser, logoutUser, loginUser, whoAmI, checkSession, addItem}
