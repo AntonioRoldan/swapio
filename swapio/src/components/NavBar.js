@@ -11,25 +11,60 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem } from 'reactstrap'
+  DropdownItem
+} from 'reactstrap'
+
+import axios from 'axios'
+import cookies from '../cookies'
 
 class NavBar extends Component {
-  constructor (props) {
-    super(props)
-
-    this.toggle = this.toggle.bind(this)
-    this.state = {
-      isOpen: false
-    }
+  state = {
+    session: cookies.getCookie('session'),
+    email: '',
+    isOpen: false
   }
 
-  toggle () {
-    this.setState({
-      isOpen: !this.state.isOpen
+  componentWillReceiveProps = () => this.checkSession()
+
+  deleteSessionData = () => {
+    document.cookie = 'session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+    this.setState({ session: null })
+  }
+
+  checkSession = () => {
+  	const session = cookies.getCookie('session')
+  	this.setState({session: session})
+
+  	axios.post('http://localhost:4000/check-session', {
+  		session: session
+  	}).then(res => {
+  		if (!res.data) {
+  			this.deleteSessionData()
+  		} else {
+        axios.get('http://localhost:4000/who-am-i', {
+          headers: {
+            Authorization: this.state.session
+          }
+        }).then(res => {
+          this.setState({
+            email: res.data
+          })
+        })  
+      }
+  	})
+  }
+
+  logout = () => {
+    axios.post('http://localhost:4000/logout', {
+      session: this.state.session
+    }).then(() => {
+      this.deleteSessionData()
     })
   }
 
-  render () {
+  toggle = () => this.setState({ isOpen: !this.state.isOpen })
+
+  render() {
     return (
       <div>
         <Navbar color="light" light expand="md">
@@ -37,26 +72,29 @@ class NavBar extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/login">Login</NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Option 1
+              {!this.state.session ?
+                <NavItem>
+                  <NavLink href="/login">Login</NavLink>
+                </NavItem>
+                :
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    {this.state.email}
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>
+                      Add Item
                   </DropdownItem>
-                  <DropdownItem>
-                    Option 2
+                    <DropdownItem>
+                      View Swap Matches
                   </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
+                    <DropdownItem divider />
+                    <DropdownItem onClick={this.logout}>
+                      Logout
                   </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              }
             </Nav>
           </Collapse>
         </Navbar>
