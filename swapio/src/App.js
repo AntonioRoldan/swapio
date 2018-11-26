@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Container } from 'reactstrap'
-import { Home, NavBar, Login, Register } from './components'
+import { Home, NavBar, Login, Register,SwapList } from './components'
 import AddItem from './components/AddItem';
 import axios from 'axios'
 import cookies from './cookies'
@@ -46,6 +46,7 @@ class App extends Component {
           <NavBar loggedIn={this.loggedIn} />
           <br />
           <Container>
+            <Route path="/Myswaps" exact component={SwapList}/>
             <Route path="/" exact component={Home} />
             <Route path="/login" component={() => <Login update={this.update} />}/>
             <Route path="/register" component={() => <Register update={this.update} />}/>

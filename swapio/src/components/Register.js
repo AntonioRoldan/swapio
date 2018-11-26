@@ -7,7 +7,7 @@ import {
   Input,
   Col
 } from 'reactstrap'
-
+import {Link} from 'react-router-dom'
 import axios from 'axios'
 import cookies from '../cookies'
 
@@ -60,7 +60,7 @@ class Register extends Component {
               type="email"
               name="email"
               id="exampleEmail"
-              placeholder="with a placeholder"
+              placeholder="Give email"
               onChange={this.handleChange}
             />
           </FormGroup>
@@ -69,14 +69,24 @@ class Register extends Component {
             <Input
               type="password"
               name="password"
-              id="examplePassword"
-              placeholder="password placeholder"
+              id="password"
+              placeholder="Give a password"
+              onChange={this.handleChange}
+               />
+          </FormGroup>
+          <FormGroup>
+            <Label for="confirmPassword">Confirm password</Label>
+            <Input
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
+              placeholder="Confirm your password"
               onChange={this.handleChange}
                />
           </FormGroup>
           <FormGroup>
             <Col className="text-right">
-              <Button onClick={this.login}>Register</Button>
+              <Button onClick={this.login}><Link to="/Myswaps">Register</Link></Button>
             </Col>
           </FormGroup>
         </Form>

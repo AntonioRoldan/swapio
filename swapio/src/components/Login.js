@@ -7,6 +7,7 @@ import {
   Input,
   Col
 } from 'reactstrap'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
 import cookies from '../cookies'
 
@@ -62,7 +63,7 @@ class Login extends Component {
           </FormGroup>
           <FormGroup>
             <Col className="text-right">
-              <Button onClick={this.login}>Login</Button>
+              <Button onClick={this.login}><Link to="/Myswaps">Login</Link></Button>
             </Col>
           </FormGroup>
         </Form>

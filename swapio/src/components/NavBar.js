@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import {Link} from 'react-router-dom'
 import {
   Collapse,
   Navbar,
@@ -90,7 +90,9 @@ class NavBar extends Component {
                   </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem onClick={this.logout}>
+                    <Link to="/">
                       Logout
+                    </Link>
                   </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
