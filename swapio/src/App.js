@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Container } from 'reactstrap'
-import { Home, NavBar, Login, Register,SwapList } from './components'
+import { Home, NavBar, Login, Register,SwapList, ItemView } from './components'
 import AddItem from './components/AddItem';
 import axios from 'axios'
 import cookies from './cookies'
@@ -38,19 +38,19 @@ class App extends Component {
   	})
   }
 
-
   render () {
     return (
       <Router>
         <div className="App">
           <NavBar loggedIn={this.loggedIn} />
-          <br />
+          <br/>
           <Container>
             <Route path="/Myswaps" exact component={SwapList}/>
             <Route path="/" exact component={Home} />
             <Route path="/login" component={() => <Login update={this.update} />}/>
             <Route path="/register" component={() => <Register update={this.update} />}/>
             <Route path="/addItem" exact component={() => <AddItem email={this.state.email}/>}/>
+            <Route path="/item/:id" exact component={ItemView}/>
           </Container>
         </div>
       </Router>

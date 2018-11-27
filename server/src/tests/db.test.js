@@ -48,4 +48,59 @@ describe('Item methods', () => {
             done()
         })
     })
+    test('View item', done => {
+        const id = '5bfdab9a5293d56a12ec4cc2'
+        const data = {
+            title: 'macbook air',
+            email:'antonio@gmail.com'
+        }
+        db.getItemDetails(id, (_, item) => {
+            dataToBeCompared = {
+                title: item.title,
+                email: item.email
+            }
+            expect(s(dataToBeCompared)).toBe(s(data))
+            done()
+        })
+    })
+})
+describe('Swapping algorithm', () => {
+    test('Swapping algorithm', done => {
+        const id = 'bananaman@fruitmail.org'
+        const yourItem = {
+            id: "5bfdab9a5293d56a12ec4cc3",
+            title: "lambo",
+            email: "bananaman@fruitmail.org"
+        }
+        const theirItem = {
+            id: '5bfdab9a5293d56a12ec4cbf',
+            title: 'table',
+            email: 'bob@lmao.com'
+        }
+        const swapWithUser = {
+            id: "5bfdab9a5293d56a12ec4cb7",
+            email: "bob@lmao.com"
+        }
+        db.findMySwaps(id, (_, swap) => {
+            const yourItemData = {
+                id: (swap.yourItem).id,
+                title: (swap.yourItem).title,
+                email: (swap.yourItem).email
+            }
+            const theirItemData = {
+                id: (swap.theirItem).id,
+                title: (swap.theirItem).title,
+                email: (swap.theirItem).email
+            }
+            const swapWithUserData = {
+                id: (swap.swapWithUser).id,
+                email: (swap.swapWithUser).email
+            }
+            expect(s(yourItemData)).toBe(s(yourItem))
+            expect(s(theirItemData)).toBe(s(theirItem))
+            expect(s(swapWithUserData)).toBe(swapWithUser)
+            done()
+        })
+
+    })
 })

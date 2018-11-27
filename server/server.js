@@ -39,6 +39,13 @@ app.get('/who-am-i', (req, res) => { //?
     })
 })
 
+app.get('/item-details', (req, res) => {
+    db.getItemDetails(req.headers.authorization, (err, item) => {
+        if(err) return res.status(err).send(item)
+        return res.send(item)
+    })
+})
+
 app.get('/my-swaps', (req, res) => {
     db.whoAmI(req.headers.authorization, (err, email) => {
         if(err) return res.status(err).send(email)

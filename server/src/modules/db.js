@@ -87,6 +87,13 @@ async function findMySwaps(currentUserEmail, callback) {
     callback(false, swaps)
 }
 
+function getItemDetails(itemId, callback) {
+    Item.findById(itemId, (err, item) => {
+        if(err) return callback(500, 'Unable to connect to database')
+        return callback(false, item)
+    })
+}
+
 function logoutUser(APIkey, callback) { 
     sessions.getSession(APIkey, session => {
         if (session) {
@@ -134,5 +141,6 @@ module.exports = {
     whoAmI,
     checkSession,
     addItem,
-    findMySwaps
+    findMySwaps,
+    getItemDetails
 }

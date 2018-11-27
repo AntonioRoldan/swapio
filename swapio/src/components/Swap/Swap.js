@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 import './Swap.css'
-import { Card, CardText, CardBody, CardLink,
+import { Card, CardText, CardBody,
   CardTitle, CardSubtitle} from 'reactstrap';
 
 class Swap extends Component {
@@ -17,7 +18,7 @@ class Swap extends Component {
         <CardBody>
           <CardText>Traded for: {(swap.yourItem).title}</CardText>
           <CardText>Trade with user: {(swap.swapWithUser).email}</CardText>
-          <CardLink href="#">See item</CardLink> {'   '}
+          <Link to={`/item/${(swap.theirItem)._id}`}>See item</Link> {'   '}
         </CardBody>
       </Card>
     </div>
