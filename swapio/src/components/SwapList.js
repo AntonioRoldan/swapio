@@ -29,12 +29,12 @@ class SwapList extends Component {
     })
   }
   render() {
-  	const swaps = this.state.swaps
-  	return (
-  		<div className='Swaplist'>
-  			{swaps.map(s => <Swap key={s._id} swap={s} />)}
-  		</div>
-  	)
+    const swaps = this.state.swaps
+      return (
+        <div className='Swaplist'>
+          {swaps.map(s => <Swap key={s._id} swap={s} />)}
+        </div>
+      )
   }
 }
 

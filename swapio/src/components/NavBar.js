@@ -7,7 +7,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -74,7 +73,7 @@ class NavBar extends Component {
             <Nav className="ml-auto" navbar>
               {!this.state.session ?
                 <NavItem>
-                  <NavLink href="/login">Login</NavLink>
+                  
                 </NavItem>
                 :
                 <UncontrolledDropdown nav inNavbar>
@@ -83,10 +82,14 @@ class NavBar extends Component {
                   </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem>
+                      <Link to='/addItem'>
                       Add Item
+                      </Link>
                   </DropdownItem>
                     <DropdownItem>
+                      <Link to='/Myswaps'>
                       View Swap Matches
+                      </Link>
                   </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem onClick={this.logout}>

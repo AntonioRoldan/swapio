@@ -86,7 +86,7 @@ class Register extends Component {
           </FormGroup>
           <FormGroup>
             <Col className="text-right">
-              <Button onClick={this.login}><Link to="/Myswaps">Register</Link></Button>
+              <Button onClick={this.signup}><Link to="/Myswaps">Register</Link></Button>
             </Col>
           </FormGroup>
         </Form>

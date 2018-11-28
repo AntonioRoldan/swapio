@@ -31,14 +31,18 @@ app.post('/login', (req, res) => { //?
         return res.send(result)
     })
 })
-
 app.get('/who-am-i', (req, res) => { //?
     db.whoAmI(req.headers.authorization, (err, email) => {
         if(err) return res.status(err).send(email)
         return res.send(email)
     })
 })
-
+app.post('/add-item', (req, res) => {
+    db.addItem(req.body.item, (err, addedItem) => {
+        if(err) return res.status(500).send(addedItem)
+        return res.send(addedItem)
+    })
+})
 app.get('/item-details', (req, res) => {
     db.getItemDetails(req.headers.authorization, (err, item) => {
         if(err) return res.status(err).send(item)

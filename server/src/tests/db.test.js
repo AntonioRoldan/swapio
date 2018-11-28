@@ -66,7 +66,7 @@ describe('Item methods', () => {
 })
 describe('Swapping algorithm', () => {
     test('Swapping algorithm', done => {
-        const id = 'bananaman@fruitmail.org'
+        const email = 'bananaman@fruitmail.org'
         const yourItem = {
             id: "5bfdab9a5293d56a12ec4cc3",
             title: "lambo",
@@ -81,7 +81,7 @@ describe('Swapping algorithm', () => {
             id: "5bfdab9a5293d56a12ec4cb7",
             email: "bob@lmao.com"
         }
-        db.findMySwaps(id, (_, swap) => {
+        db.findMySwaps(email, (_, swap) => {
             const yourItemData = {
                 id: (swap.yourItem).id,
                 title: (swap.yourItem).title,
