@@ -1,4 +1,4 @@
-//This module initialises the database for the tests to be backed by some real data 
+// This module initialises the database for the tests to be backed by some real data
 
 const { mongoose } = require('./modules/mongoose')
 
@@ -19,19 +19,19 @@ async function clean (callback) {
   return callback()
 }
 
-function createNewData() {
+function createNewData () {
   userMocks.map(userDef => {
     const u1 = new User(userDef)
     u1.save((err, u) => {
       if (err) console.error(err)
       console.log('added', u)
-    })  
+    })
   })
 
   sessionMocks.map(sessionDef => {
     const sess = new Session(sessionDef)
     sess.save((err, s) => {
-      if(err) console.error(err)
+      if (err) console.error(err)
       console.log('added', s)
     })
   })
@@ -39,7 +39,7 @@ function createNewData() {
   itemMocks.map(itemDef => {
     const item = new Item(itemDef)
     item.save((err, i) => {
-      if(err) console.error(err)
+      if (err) console.error(err)
       console.log('added', i)
     })
   })
@@ -48,7 +48,7 @@ function createNewData() {
 db.once('open', () => {
   clean(() => {
     createNewData()
-  })  
+  })
 })
 
 setTimeout(() => {

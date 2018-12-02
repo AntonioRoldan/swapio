@@ -13,7 +13,7 @@ const sessions = [
     email: 'bananaman@fruitmail.org',
     APIkey: '32c046c1-5b70-4430-98a8-2feba4f9e429',
     expiry: '2019-11-26 08:00:59.000Z'
-  },
+  }
 ]
 
 module.exports = sessions

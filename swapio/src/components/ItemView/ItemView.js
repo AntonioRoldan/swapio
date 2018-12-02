@@ -1,40 +1,62 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
 import './ItemView.css'
-import axios from 'axios';
+import axios from 'axios'
+import cookies from '../../cookies'
+import { SendEmail } from '../../components'
+import { Button, Collapse } from 'reactstrap'
 
-
-  class ItemView extends Component {
-    state = {
-     item: {} 
-    }
-    getItemDetails = () => {
-      axios.get('http://localhost:4000/item-details', {
-        headers: {
-          Authorization: this.props.match.params.id
-        }
-      }).then(res => {
-        this.setState({
-          item: res.data
-        })
-      })
-    }
-    componentDidMount = () => {
-      this.getItemDetails()
-    }
-    render() {
-      const item = this.state.item
-      return(
-        <div>
-  				<img src={item.imgurl || 'https://via.placeholder.com/200x200'} alt='item' class='advertimg'/>
-  				<div className='details'>
-  					<h2>{item.title}</h2>
-  					<p>{item.description}</p>
-  				</div>
-  				<Link to="#">Send email to {item.email}</Link>
-  			</div>
-      )
-    }
+class ItemView extends Component {
+  state = {
+    item: {},
+    contact: false,
+    session: ''
   }
 
-  export default ItemView
+  getItemDetails = () => {
+    axios.get('http://localhost:4000/item-details', {
+      headers: {
+        Authorization: this.props.match.params.itemId
+      }
+    }).then(res => {
+      this.setState({
+        item: res.data
+      })
+    })
+  }
+
+  componentDidMount = () => {
+    this.setState({
+      session: cookies.getSession(),
+      itemId: this.props.match.params.itemId,
+      toUserId: this.props.match.params.toUserId
+    }, () => {
+      this.getItemDetails()
+    })
+  }
+
+  toggleContact = () => {
+    this.setState({ contact: !this.state.contact })
+  }
+
+  render () {
+    const item = this.state.item
+    return (
+      <div className="mb-4">
+        <img src={item.imgurl || 'https://via.placeholder.com/200x200'} alt='item' className='advertimg' />
+        <div className='details'>
+          <h2>{item.title}</h2>
+          <p>{item.description}</p>
+        </div>
+        <div>
+          <Button color="secondary" onClick={this.toggleContact}>Contact</Button>
+
+          <Collapse isOpen={this.state.contact}>
+            <SendEmail toUserId={this.state.toUserId} />
+          </Collapse>
+        </div>
+      </div>
+    )
+  }
+}
+
+export default ItemView

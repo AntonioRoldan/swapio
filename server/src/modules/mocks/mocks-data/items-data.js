@@ -34,7 +34,7 @@ const items = [
   {
     title: 'paper shredder',
     email: 'bananaman@fruitmail.org'
-  },
+  }
 ]
 
 module.exports = items

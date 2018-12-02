@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
   Collapse,
   Navbar,
@@ -18,7 +18,7 @@ import cookies from '../cookies'
 
 class NavBar extends Component {
   state = {
-    session: cookies.getCookie('session'),
+    session: cookies.getSession(),
     email: '',
     isOpen: false
   }
@@ -31,15 +31,15 @@ class NavBar extends Component {
   }
 
   checkSession = () => {
-  	const session = cookies.getCookie('session')
-  	this.setState({session: session})
+    const session = cookies.getSession()
+    this.setState({ session: session })
 
-  	axios.post('http://localhost:4000/check-session', {
-  		session: session
-  	}).then(res => {
-  		if (!res.data) {
-  			this.deleteSessionData()
-  		} else {
+    axios.post('http://localhost:4000/check-session', {
+      session: session
+    }).then(res => {
+      if (!res.data) {
+        this.deleteSessionData()
+      } else {
         axios.get('http://localhost:4000/who-am-i', {
           headers: {
             Authorization: this.state.session
@@ -48,9 +48,9 @@ class NavBar extends Component {
           this.setState({
             email: res.data
           })
-        })  
+        })
       }
-  	})
+    })
   }
 
   logout = () => {
@@ -63,7 +63,7 @@ class NavBar extends Component {
 
   toggle = () => this.setState({ isOpen: !this.state.isOpen })
 
-  render() {
+  render () {
     return (
       <div>
         <Navbar color="light" light expand="md">
@@ -71,32 +71,36 @@ class NavBar extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              {!this.state.session ?
-                <NavItem>
-                  
+              {!this.state.session
+                ? <NavItem>
+
                 </NavItem>
-                :
-                <UncontrolledDropdown nav inNavbar>
+                : <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     {this.state.email}
                   </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem>
                       <Link to='/addItem'>
-                      Add Item
+                        Add Item
                       </Link>
-                  </DropdownItem>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <Link to="/addwishlist">
+                        Add items to wishlist
+                      </Link>
+                    </DropdownItem>
                     <DropdownItem>
                       <Link to='/Myswaps'>
-                      View Swap Matches
+                        View Swap Matches
                       </Link>
-                  </DropdownItem>
+                    </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem onClick={this.logout}>
-                    <Link to="/">
-                      Logout
-                    </Link>
-                  </DropdownItem>
+                      <Link to="/">
+                        Logout
+                      </Link>
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               }

@@ -9,7 +9,7 @@ describe('User validation', () => {
   })
   test('Valid password', done => {
     expect(() => {
-      function validPassword() {
+      function validPassword () {
         valid.validPassword('wha')
       }
       expect(validPassword).toThrowError('Password not long enough')
@@ -29,7 +29,7 @@ describe('User validation', () => {
     }
     expect(valid.validUser(invalidUserEmail)).toBe(false)
     expect(() => {
-      function validPassword() {
+      function validPassword () {
         const invalidUserPassword = {
           email: 'Michael',
           password: 'wha'

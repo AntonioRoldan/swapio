@@ -5,6 +5,8 @@ import Register from './Register'
 import AddItem from './AddItem'
 import SwapList from './SwapList'
 import ItemView from './ItemView/ItemView'
+import Addwishlist from './Addwishlist'
+import SendEmail from './SendEmail'
 export {
   Home,
   NavBar,
@@ -12,5 +14,7 @@ export {
   Register,
   AddItem,
   SwapList,
-  ItemView
+  ItemView,
+  Addwishlist,
+  SendEmail
 }

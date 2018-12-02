@@ -8,33 +8,33 @@ class SwapList extends Component {
     swaps: [],
     session: ''
   }
+
   componentDidMount = () => {
     this.setState({
-      session: cookies.getCookie('session')
+      session: cookies.getSession()
     }, () => {
       axios.get('http://localhost:4000/my-swaps', {
         headers: {
           Authorization: this.state.session
         }
       })
-  		.then(res => {
-        console.log(res.data)
-  			this.setState({
-          swaps: res.data
-  			})
-  		})
-  		.catch(error => {
-  			console.log(error)
-  		})
+        .then(res => {
+          this.setState({
+            swaps: res.data
+          })
+        })
+        .catch(error => {
+          console.error(error)
+        })
     })
   }
-  render() {
+  render () {
     const swaps = this.state.swaps
-      return (
-        <div className='Swaplist'>
-          {swaps.map(s => <Swap key={s._id} swap={s} />)}
-        </div>
-      )
+    return (
+      <div className='Swaplist' >
+        {swaps.map(s => <Swap key={s.key} swap={s} />)}
+      </div>
+    )
   }
 }
 

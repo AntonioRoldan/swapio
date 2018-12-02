@@ -7,12 +7,11 @@ import {
   Input,
   Col
 } from 'reactstrap'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import cookies from '../cookies'
 
 class Login extends Component {
-
   state = {
     email: '',
     password: ''
@@ -38,7 +37,7 @@ class Login extends Component {
     })
   }
 
-  render() {
+  render () {
     return (
       <div className="login">
         <h2>Login</h2>

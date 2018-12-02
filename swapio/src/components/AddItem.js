@@ -10,7 +10,6 @@ import {
 import axios from 'axios'
 
 class AddItem extends Component {
-
   state = {
     title: '',
     description: '',
@@ -24,17 +23,17 @@ class AddItem extends Component {
       imgurl: this.state.imgurl
     }
     axios.post('http://localhost:4000/add-item', item)
-    .then(res => {
-      console.log(res.data)
-    }).catch(err => {
-      console.log(err)
-    })
+      .then(res => {
+        console.log(res.data)
+      }).catch(err => {
+        console.log(err)
+      })
   }
 
   handleChange = event => {
-  	this.setState({
-  		[event.target.name]: event.target.value
-  	})
+    this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
   render () {
@@ -45,10 +44,10 @@ class AddItem extends Component {
           <FormGroup>
             <Label for="Title">Title</Label>
             <Input type="text"
-             name="title"
-             id="title" 
-             placeholder="Give a title"
-             onChange={this.handleChange} />
+              name="title"
+              id="title"
+              placeholder="Give a title"
+              onChange={this.handleChange} />
           </FormGroup>
           <FormGroup controlId='formControlsDescription'>
             <Label for="Description">Description</Label>
@@ -57,15 +56,15 @@ class AddItem extends Component {
               placeholder='Write your description here'
               id="description"
               name='description'
-              onChange={this.handleChange}/>
-  			  </FormGroup>
+              onChange={this.handleChange} />
+          </FormGroup>
           <FormGroup>
             <Label for="imgurl">Img url</Label>
             <Input type="text"
-                   name="imgurl"
-                   id="imgurl"
-                   placeholder="Upload an image"
-                   onChange={this.handleChange} />
+              name="imgurl"
+              id="imgurl"
+              placeholder="Upload an image"
+              onChange={this.handleChange} />
           </FormGroup>
           <FormGroup>
             <Col className="text-right">

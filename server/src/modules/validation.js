@@ -1,21 +1,20 @@
 
-function validUser(user) {
+function validUser (user) {
   return validEmail(user.email) && validPassword(user.password)
 }
 
-function validEmail(email) {
+function validEmail (email) {
   return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)
 }
 
 const validPassword = password => {
-  if(password.length < 7) {
-      throw new Error('Password not long enough')
+  if (password.length < 7) {
+    throw new Error('Password not long enough')
   }
   return true
 }
 
-module.exports = 
+module.exports =
 { validUser,
-   validEmail, 
-   validPassword}
-
+  validEmail,
+  validPassword }
