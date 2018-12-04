@@ -19,7 +19,9 @@ class App extends Component {
   }
 
   update = loggedIn => {
-    this.setState({ loggedIn: loggedIn })
+    if (this.state.loggedIn !== loggedIn) {
+      this.setState({ loggedIn: loggedIn })
+    }
   }
 
   getLoginInfo = () => {
@@ -42,16 +44,16 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <NavBar loggedIn={this.loggedIn} />
+          <NavBar loggedIn={this.state.loggedIn} />
           <br />
           <Container>
-            <Route path="/Myswaps" exact component={SwapList} />
-            <Route path="/" exact component={Home} />
+            <Route path="/myswaps" exact component={SwapList} />
+            <Route path="/" exact component={() => <Home loggedIn={this.state.loggedIn}/>} />
             <Route path="/login" component={() => <Login update={this.update} />} />
             <Route path="/register" component={() => <Register update={this.update} />} />
             <Route path="/addItem" exact component={() => <AddItem email={this.state.email} />} />
             <Route path="/addwishlist" exact component={Addwishlist} />
-            <Route path="/item/:itemId/:toUserId" component={props => <ItemView {...props} />} />
+            <Route path="/item/:itemId/:toUserId?" component={props => <ItemView {...props} />} />
           </Container>
         </div>
       </Router>

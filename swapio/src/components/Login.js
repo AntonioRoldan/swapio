@@ -62,7 +62,7 @@ class Login extends Component {
           </FormGroup>
           <FormGroup>
             <Col className="text-right">
-              <Button onClick={this.login}><Link to="/Myswaps">Login</Link></Button>
+              <Button onClick={this.login}><Link to="/myswaps">Login</Link></Button>
             </Col>
           </FormGroup>
         </Form>

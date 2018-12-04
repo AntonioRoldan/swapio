@@ -8,23 +8,34 @@ import {
   Col
 } from 'reactstrap'
 import axios from 'axios'
+import cookies from '../cookies'
+import { Redirect } from 'react-router-dom'
 
 class AddItem extends Component {
   state = {
+    session: '',
     title: '',
     description: '',
-    imgurl: ''
+    imgurl: '',
+    addedItemId: ''
+  }
+
+  componentDidMount () {
+    this.setState({ session: cookies.getSession() })
   }
 
   addItem = () => {
-    const item = {
+    axios.post('http://localhost:4000/add-item', {
       title: this.state.title,
       description: this.state.description,
       imgurl: this.state.imgurl
-    }
-    axios.post('http://localhost:4000/add-item', item)
+    }, {
+      headers: {
+        authorization: this.state.session
+      }
+    })
       .then(res => {
-        console.log(res.data)
+        this.setState({ addedItemId: res.data._id })
       }).catch(err => {
         console.log(err)
       })
@@ -37,6 +48,8 @@ class AddItem extends Component {
   }
 
   render () {
+    if (this.state.addedItemId) return (<Redirect to={`/item/${this.state.addedItemId}`} />)
+
     return (
       <div className="Itemaddingform">
         <h2>Add a new item</h2>

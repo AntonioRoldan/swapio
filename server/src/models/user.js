@@ -7,15 +7,11 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
     trim: true
   },
-  email: { // How do we make sure the user inserts a valid email?
+  email: {
     type: String,
     required: true,
     minlength: 1,
     trim: true
-  },
-  userHas: {
-    type: Array,
-    required: true
   },
   userWants: {
     type: Array,

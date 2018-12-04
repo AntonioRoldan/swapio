@@ -47,13 +47,13 @@ class ItemView extends Component {
           <h2>{item.title}</h2>
           <p>{item.description}</p>
         </div>
-        <div>
+        {this.state.toUserId ? (<div>
           <Button color="secondary" onClick={this.toggleContact}>Contact</Button>
 
           <Collapse isOpen={this.state.contact}>
             <SendEmail toUserId={this.state.toUserId} />
           </Collapse>
-        </div>
+        </div>) : ''}
       </div>
     )
   }

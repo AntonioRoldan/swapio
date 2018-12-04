@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link
+} from 'react-router-dom'
 import {
   Collapse,
   Navbar,
@@ -20,7 +21,8 @@ class NavBar extends Component {
   state = {
     session: cookies.getSession(),
     email: '',
-    isOpen: false
+    isOpen: false,
+    logoutHappened: false
   }
 
   componentWillReceiveProps = () => this.checkSession()
@@ -91,7 +93,7 @@ class NavBar extends Component {
                       </Link>
                     </DropdownItem>
                     <DropdownItem>
-                      <Link to='/Myswaps'>
+                      <Link to='/myswaps'>
                         View Swap Matches
                       </Link>
                     </DropdownItem>

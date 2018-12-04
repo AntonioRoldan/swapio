@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Button } from 'reactstrap'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 class Home extends Component {
   render () {
+    if (this.props.loggedIn) return (<Redirect to='/myswaps' />)
     return (
       <div className="home">
         <h1>welcome to swapio</h1>

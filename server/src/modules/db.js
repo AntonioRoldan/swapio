@@ -41,10 +41,9 @@ function addItem (email, title, description, imgurl, callback) {
     imgurl: imgurl,
     email: email
   })
-  i.save().then((itemData) => {
-    return callback(false, itemData)
-  }, e => {
-    return callback(500, e.message)
+  i.save((err, addedItem) => {
+    if (err) return callback(500, err)
+    return callback(false, addedItem)
   })
 }
 
@@ -62,11 +61,11 @@ async function findMySwaps (currentUserEmail, callback) {
       // for items the logged in user wants
       for (const wantsTitle of currentUser.userWants) {
         // if the current user wants that item then check reverse trades
-        if (item.title === wantsTitle) {
+        if (item.title.toLowerCase() === wantsTitle) {
           // for item you have
           for (const currentUserHasItem of (await Item.find({ email: currentUserEmail }))) {
             // if looped user wants the item you have, push to swaps list
-            if (user.userWants.includes(currentUserHasItem.title)) {
+            if (user.userWants.includes(currentUserHasItem.title.toLowerCase())) {
               swaps.push({
                 key: `${currentUserHasItem._id}-${item._id}`,
                 yourItem: currentUserHasItem,
@@ -123,6 +122,8 @@ function userBySession (APIKey, callback) {
       if (err) return callback(err, "Can't find 'to' user")
 
       const user = data[0]
+      if (!user) return callback(404, "Can't find user")
+
       return callback(false, {
         '_id': user._id,
         'email': user.email,
@@ -166,9 +167,11 @@ function addToWishlist (APIkey, items, callback) {
   userBySession(APIkey, (err, user) => {
     if (err) return callback(err)
     if (!user) return callback(404)
+
+    items.map(item => item.toLowerCase())
     User.findByIdAndUpdate(user._id, {
       $addToSet: { userWants: { $each: items } }
-    }, (err, user) => {
+    }, { new: true }, (err, user) => {
       if (err) return callback(err)
       return callback(false, user.userWants)
     })

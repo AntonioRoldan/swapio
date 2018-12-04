@@ -40,9 +40,13 @@ app.get('/who-am-i', (req, res) => { // ?
   })
 })
 app.post('/add-item', (req, res) => {
-  db.addItem(req.body.item, (err, addedItem) => {
-    if (err) return res.status(500).send(addedItem)
-    return res.send(addedItem)
+  db.whoAmI(req.headers.authorization, (err, email) => {
+    if (err) return res.status(err).send(email)
+
+    db.addItem(email, req.body.title, req.body.description, req.body.imgurl, (err, data) => {
+      if (err) return res.status(500).send(data)
+      return res.send(data)
+    })
   })
 })
 app.get('/item-details', (req, res) => {
@@ -70,8 +74,8 @@ app.post('/check-session', (req, res) => { // ?
 })
 
 app.post('/add-wishlist', (req, res) => {
+  if (!req.headers.authorization) return res.status(400, 'No auth')
   if (!req.body.items) return res.status(400, "Please specify 'items' list")
-  if (req.headers.authorization) return res.status(400, 'No auth')
 
   db.addToWishlist(req.headers.authorization, req.body.items, (error, wishlist) => {
     if (error) return res.status(error).send(wishlist)

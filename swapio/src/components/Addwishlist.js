@@ -12,10 +12,12 @@ import cookies from '../cookies'
 
 class Addwishlist extends Component {
   state = {
-    wishlist: [],
+    wishlist: '',
+    dbWishlist: [],
     email: '',
     session: ''
   }
+
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -24,12 +26,16 @@ class Addwishlist extends Component {
 
   componentDidMount = () => {
     const session = cookies.getSession()
-    this.setState({ session: session })
+    this.setState({ session: session }, () => {
+      this.addToWishlist([])
+    })
   }
 
   addToWishlist = () => {
-    const wishlist = this.state.wishlist.split(',').map(x => x.trim())
-    console.log('wishlist :', wishlist)
+    const wishlist = this.state.wishlist
+      .split(',')
+      .map(x => x.trim())
+      .filter(x => x) || []
 
     axios.post('http://localhost:4000/add-wishlist', {
       items: wishlist
@@ -40,6 +46,7 @@ class Addwishlist extends Component {
     })
       .then(res => {
         console.log(res)
+        this.setState({ dbWishlist: res.data })
       })
       .catch(err => {
         console.log(err)
@@ -48,21 +55,27 @@ class Addwishlist extends Component {
 
   render () {
     return (
-      <Form>
-        <FormGroup>
-          <Label for="Wishlist">Title</Label>
-          <Input type="text"
-            name="wishlist"
-            id="wishlist"
-            placeholder="Type in your wanted items separated by commas"
-            onChange={this.handleChange} />
-        </FormGroup>
-        <FormGroup>
-          <Col className="text-right">
-            <Button onClick={this.addToWishlist}>Add to your wishlist</Button>
-          </Col>
-        </FormGroup>
-      </Form>
+      <div>
+        <Form>
+          <FormGroup>
+            <Label for="Wishlist">Title</Label>
+            <Input type="text"
+              name="wishlist"
+              id="wishlist"
+              placeholder="Type in your wanted items separated by commas"
+              onChange={this.handleChange} />
+          </FormGroup>
+          <FormGroup>
+            <Col className="text-right">
+              <Button onClick={this.addToWishlist}>Add to your wishlist</Button>
+            </Col>
+          </FormGroup>
+        </Form>
+        <br />
+        <ul>
+          {this.state.dbWishlist.map((item, i) => (<li key={i}>{item}</li>))}
+        </ul>
+      </div>
     )
   }
 }
