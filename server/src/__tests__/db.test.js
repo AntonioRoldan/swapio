@@ -49,7 +49,7 @@ describe('Item methods', () => {
     })
   })
   test('View item', done => {
-    const id = '5c07055738d868380a4e51eb' // We change this
+    const id = '5c09366dd51a9f57c14fe536' // We change this
     const data = {
       title: 'macbook air',
       email: 'antonio@gmail.com'

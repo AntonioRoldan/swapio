@@ -56,6 +56,7 @@ async function findMySwaps (currentUserEmail, callback) {
 
   // for every user
   for (const user of users) {
+    if (currentUser.email === user.email) continue
     // for every item every user has
     for (const item of (await Item.find({ email: user.email }))) {
       // for items the logged in user wants
@@ -81,7 +82,6 @@ async function findMySwaps (currentUserEmail, callback) {
       }
     }
   }
-
   callback(false, swaps)
 }
 
