@@ -136,14 +136,20 @@ describe('If we load the homepage', () => {
     await page.type('input[id=inputEmail]', mockUser.email)
     await page.type('input[id=inputPassword]', mockUser.password)
     await page.click('button[id=login-button]')
-    await page.waitFor(1000)
+    await page.waitFor(500)
 
     await page.goto('http://localhost:3000/myswaps')
-    await page.waitFor(1000)
+    await page.waitFor(500)
 
-    await page.screenshot({ path: 'page.png' })
+    await page.click('a[class=see-item-button]')
+    await page.waitFor(500)
 
-    await page.click('button[class=see-item-button]')
-    await page.waitFor(1000)
+    const itemTitle = await page.evaluate(
+      () => document.querySelector('h2[id=title]').textContent
+    )
+
+    expect(!!itemTitle).toBe(true)
+
+    done()
   })
 })
