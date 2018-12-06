@@ -81,7 +81,7 @@ class AddItem extends Component {
           </FormGroup>
           <FormGroup>
             <Col className="text-right">
-              <Button onClick={this.addItem}>Add to item list</Button>
+              <Button id='add-item-button' onClick={this.addItem}>Add to item list</Button>
             </Col>
           </FormGroup>
         </Form>

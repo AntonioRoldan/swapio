@@ -79,7 +79,7 @@ class NavBar extends Component {
                 </NavItem>
                 : <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
-                    {this.state.email}
+                    <span id='navbar-email'>{this.state.email}</span>
                   </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem>

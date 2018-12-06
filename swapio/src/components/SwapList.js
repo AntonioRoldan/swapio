@@ -32,8 +32,6 @@ class SwapList extends Component {
   render () {
     const swaps = this.state.swaps
 
-    console.log('swaps :', swaps)
-
     if (!swaps || swaps.length === 0) {
       return (
         <div>

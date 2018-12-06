@@ -9,7 +9,8 @@ class ItemView extends Component {
   state = {
     item: {},
     contact: false,
-    session: ''
+    session: '',
+    toUserId: ''
   }
 
   getItemDetails = () => {
@@ -42,10 +43,10 @@ class ItemView extends Component {
     const item = this.state.item
     return (
       <div className="mb-4">
-        <img src={item.imgurl || 'https://via.placeholder.com/200x200'} alt='item' className='advertimg' />
+        <img id="image" src={item.imgurl || 'https://via.placeholder.com/200x200'} alt='item' className='advertimg' />
         <div className='details'>
-          <h2>{item.title}</h2>
-          <p>{item.description}</p>
+          <h2 id="title">{item.title}</h2>
+          <p id="description">{item.description}</p>
         </div>
         {this.state.toUserId ? (<div>
           <Button color="secondary" onClick={this.toggleContact}>Contact</Button>

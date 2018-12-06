@@ -19,7 +19,7 @@ class Swap extends Component {
           <CardBody>
             <CardText>Traded for: {swap.yourItem.title}</CardText>
             <CardText>Trade with user: {swap.swapWithUser.email}</CardText>
-            <Link to={`/item/${swap.theirItem._id}/${swap.swapWithUser._id}`}>See item</Link> {'   '}
+            <Link className='see-item-button' to={`/item/${swap.theirItem._id}/${swap.swapWithUser._id}`}>See item</Link> {'   '}
           </CardBody>
         </Card>
       </div>

@@ -7,14 +7,15 @@ import {
   Input,
   Col
 } from 'reactstrap'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import cookies from '../cookies'
 
 class Login extends Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    loggedIn: false
   }
 
   login = () => {
@@ -24,6 +25,7 @@ class Login extends Component {
     })
       .then(res => {
         cookies.setCookie('session', res.data)
+        this.setState({ loggedIn: true })
         this.props.update(true)
       })
       .catch(err => {
@@ -38,31 +40,33 @@ class Login extends Component {
   }
 
   render () {
+    if (this.state.loggedIn) return (<Redirect to='/myswaps' />)
+
     return (
       <div className="login">
         <h2>Login</h2>
         <Form>
           <FormGroup>
-            <Label for="exampleEmail">Email</Label>
+            <Label for="inputEmail">Email</Label>
             <Input
               type="email"
               name="email"
-              id="exampleEmail"
+              id="inputEmail"
               placeholder="with a placeholder"
               onChange={this.handleChange} />
           </FormGroup>
           <FormGroup>
-            <Label for="examplePassword">Password</Label>
+            <Label for="inputPassword">Password</Label>
             <Input
               type="password"
               name="password"
-              id="examplePassword"
+              id="inputPassword"
               placeholder="password placeholder"
               onChange={this.handleChange} />
           </FormGroup>
           <FormGroup>
             <Col className="text-right">
-              <Button onClick={this.login}><Link to="/myswaps">Login</Link></Button>
+              <Button id='login-button' onClick={this.login}>Login</Button>
             </Col>
           </FormGroup>
         </Form>

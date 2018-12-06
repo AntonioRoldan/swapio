@@ -7,7 +7,7 @@ import {
   Input,
   Col
 } from 'reactstrap'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import cookies from '../cookies'
 
@@ -16,7 +16,8 @@ class Register extends Component {
     username: '',
     email: '',
     password: '',
-    confirmpassword: ''
+    confirmpassword: '',
+    registered: false
   }
 
   handleChange = event => {
@@ -32,6 +33,7 @@ class Register extends Component {
       password: this.state.password,
       confirmpassword: this.state.confirmpassword
     }).then(res => {
+      this.setState({ registered: true })
       this.login()
     }).catch(err => {
       console.log(err)
@@ -50,26 +52,28 @@ class Register extends Component {
     })
   }
   render () {
+    if (this.state.registered) return (<Redirect to='/myswaps' />)
+
     return (
       <div className="login">
         <h2>Register</h2>
         <Form>
           <FormGroup>
-            <Label for="exampleEmail">Email</Label>
+            <Label for="inputEmail">Email</Label>
             <Input
               type="email"
               name="email"
-              id="exampleEmail"
+              id="inputEmail"
               placeholder="Give email"
               onChange={this.handleChange}
             />
           </FormGroup>
           <FormGroup>
-            <Label for="examplePassword">Password</Label>
+            <Label for="inputPassword">Password</Label>
             <Input
               type="password"
               name="password"
-              id="password"
+              id="inputPassword"
               placeholder="Give a password"
               onChange={this.handleChange}
             />
@@ -86,7 +90,7 @@ class Register extends Component {
           </FormGroup>
           <FormGroup>
             <Col className="text-right">
-              <Button onClick={this.signup}><Link to="/myswaps">Register</Link></Button>
+              <Button id='register-button' onClick={this.signup}>Register</Button>
             </Col>
           </FormGroup>
         </Form>

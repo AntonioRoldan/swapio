@@ -4,6 +4,9 @@
         "standard",
         "plugin:react/recommended"
     ],
+    "env": {
+        "jest": true
+    },
     "rules": {
         "react/prop-types": 0,
         "react/no-deprecated": 0

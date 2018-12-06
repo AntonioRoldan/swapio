@@ -58,21 +58,21 @@ class Addwishlist extends Component {
       <div>
         <Form>
           <FormGroup>
-            <Label for="Wishlist">Title</Label>
+            <Label for="wishlist">Title</Label>
             <Input type="text"
               name="wishlist"
-              id="wishlist"
+              id="input-wishlist"
               placeholder="Type in your wanted items separated by commas"
               onChange={this.handleChange} />
           </FormGroup>
           <FormGroup>
             <Col className="text-right">
-              <Button onClick={this.addToWishlist}>Add to your wishlist</Button>
+              <Button id="addWishlist" onClick={this.addToWishlist}>Add to your wishlist</Button>
             </Col>
           </FormGroup>
         </Form>
         <br />
-        <ul>
+        <ul id="dbwishlist">
           {this.state.dbWishlist.map((item, i) => (<li key={i}>{item}</li>))}
         </ul>
       </div>

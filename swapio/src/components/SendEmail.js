@@ -12,21 +12,16 @@ import cookies from '../cookies'
 class SendEmail extends Component {
   state = {
     session: '',
-    message: ''
+    message: '',
+    toUserId: ''
   }
 
   componentDidMount = () => {
     this.setState({
-      session: cookies.getSession()
+      session: cookies.getSession(),
+      toUserId: this.props.toUserId
     })
   }
-
-  componentDidRecieveProps = newProps => {
-    this.setState({
-      toUserId: newProps.toUserId
-    })
-  }
-
   sendEmail = () => {
     console.log('this.state :', this.state)
     axios.post('http://localhost:4000/send-message', {
