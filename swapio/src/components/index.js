@@ -7,14 +7,4 @@ import SwapList from './SwapList'
 import ItemView from './ItemView/ItemView'
 import Addwishlist from './Addwishlist'
 import SendEmail from './SendEmail'
-export {
-  Home,
-  NavBar,
-  Login,
-  Register,
-  AddItem,
-  SwapList,
-  ItemView,
-  Addwishlist,
-  SendEmail
-}
+export { Home, NavBar, Login, Register, AddItem, SwapList, ItemView, Addwishlist, SendEmail }

@@ -5,7 +5,8 @@ const sessions = require('./sessions')
 require('./mongoose')
 const email = require('../email')
 
-function registerUser (email, password, callback) { // tested
+function registerUser(email, password, callback) {
+  // tested
   User.findOne({ email: email }, (err, user) => {
     if (err) {
       return callback(500, 'Failed to connect to database')
@@ -16,30 +17,33 @@ function registerUser (email, password, callback) { // tested
       try {
         validation.validUser({
           email: email,
-          password: password
+          password: password,
         })
       } catch (e) {
         return callback(406, e.message)
       }
       const u = new User({ email: email, password: password })
-      u.save().then((userData) => {
-        return callback(false, {
-          email: userData.email
-        }) // The code must be changed to be more testable
-      }, e => {
-        console.log(e)
-        return callback(500, e.message)
-      })
+      u.save().then(
+        userData => {
+          return callback(false, {
+            email: userData.email,
+          }) // The code must be changed to be more testable
+        },
+        e => {
+          console.log(e)
+          return callback(500, e.message)
+        }
+      )
     }
   })
 }
 
-function addItem (email, title, description, imgurl, callback) {
+function addItem(email, title, description, imgurl, callback) {
   const i = new Item({
     title: title,
     description: description,
     imgurl: imgurl,
-    email: email
+    email: email,
   })
   i.save((err, addedItem) => {
     if (err) return callback(500, err)
@@ -47,7 +51,7 @@ function addItem (email, title, description, imgurl, callback) {
   })
 }
 
-async function findMySwaps (currentUserEmail, callback) {
+async function findMySwaps(currentUserEmail, callback) {
   let swaps = []
 
   const currentUser = (await User.find({ email: currentUserEmail }))[0]
@@ -58,13 +62,13 @@ async function findMySwaps (currentUserEmail, callback) {
   for (const user of users) {
     if (currentUser.email === user.email) continue
     // for every item every user has
-    for (const item of (await Item.find({ email: user.email }))) {
+    for (const item of await Item.find({ email: user.email })) {
       // for items the logged in user wants
       for (const wantsTitle of currentUser.userWants) {
         // if the current user wants that item then check reverse trades
         if (item.title.toLowerCase() === wantsTitle) {
           // for item you have
-          for (const currentUserHasItem of (await Item.find({ email: currentUserEmail }))) {
+          for (const currentUserHasItem of await Item.find({ email: currentUserEmail })) {
             // if looped user wants the item you have, push to swaps list
             if (user.userWants.includes(currentUserHasItem.title.toLowerCase())) {
               swaps.push({
@@ -73,8 +77,8 @@ async function findMySwaps (currentUserEmail, callback) {
                 theirItem: item,
                 swapWithUser: {
                   _id: user._id,
-                  email: user.email
-                }
+                  email: user.email,
+                },
               })
             }
           }
@@ -85,14 +89,14 @@ async function findMySwaps (currentUserEmail, callback) {
   callback(false, swaps)
 }
 
-function getItemDetails (itemId, callback) {
+function getItemDetails(itemId, callback) {
   Item.findById(itemId, (err, item) => {
     if (err) return callback(500, 'Unable to connect to database')
     return callback(false, item)
   })
 }
 
-function logoutUser (APIkey, callback) {
+function logoutUser(APIkey, callback) {
   sessions.getSession(APIkey, session => {
     if (session) {
       sessions.invalidatePrevSessions(session.email, () => {
@@ -104,18 +108,18 @@ function logoutUser (APIkey, callback) {
   })
 }
 
-function checkSession (APIkey, callback) {
+function checkSession(APIkey, callback) {
   sessions.getSession(APIkey, session => callback(session))
 }
 
-function whoAmI (APIkey, callback) {
+function whoAmI(APIkey, callback) {
   sessions.emailFromSession(APIkey, email => {
     if (email) return callback(false, email)
     return callback(404, 'User not found')
   })
 }
 
-function userBySession (APIKey, callback) {
+function userBySession(APIKey, callback) {
   whoAmI(APIKey, (err, data) => {
     if (err) return callback(err, "Can't get logged in user")
     User.find({ email: data }, (err, data) => {
@@ -125,16 +129,16 @@ function userBySession (APIKey, callback) {
       if (!user) return callback(404, "Can't find user")
 
       return callback(false, {
-        '_id': user._id,
-        'email': user.email,
-        'userHas': user.userHas,
-        'userWants': user.userWants
+        _id: user._id,
+        email: user.email,
+        userHas: user.userHas,
+        userWants: user.userWants,
       })
     })
   })
 }
 
-function loginUser (email, password, callback) {
+function loginUser(email, password, callback) {
   User.findOne({ email: email }, (err, user) => {
     if (err) return callback(500, 'Internal server error')
     if (user) {
@@ -151,7 +155,7 @@ function loginUser (email, password, callback) {
   })
 }
 
-function contactUser (toUserId, fromUserId, message, callback) {
+function contactUser(toUserId, fromUserId, message, callback) {
   const getToUser = User.findById(toUserId).exec()
   const getFromUser = User.findById(fromUserId).exec()
   Promise.all([getToUser, getFromUser])
@@ -163,18 +167,23 @@ function contactUser (toUserId, fromUserId, message, callback) {
     .catch(err => callback(500, err))
 }
 
-function addToWishlist (APIkey, items, callback) {
+function addToWishlist(APIkey, items, callback) {
   userBySession(APIkey, (err, user) => {
     if (err) return callback(err)
     if (!user) return callback(404)
 
     items.map(item => item.toLowerCase())
-    User.findByIdAndUpdate(user._id, {
-      $addToSet: { userWants: { $each: items } }
-    }, { new: true }, (err, user) => {
-      if (err) return callback(err)
-      return callback(false, user.userWants)
-    })
+    User.findByIdAndUpdate(
+      user._id,
+      {
+        $addToSet: { userWants: { $each: items } },
+      },
+      { new: true },
+      (err, user) => {
+        if (err) return callback(err)
+        return callback(false, user.userWants)
+      }
+    )
   })
 }
 
@@ -192,5 +201,5 @@ module.exports = {
   contactUser,
   getSession,
   addToWishlist,
-  userBySession
+  userBySession,
 }

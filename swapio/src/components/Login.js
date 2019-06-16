@@ -1,12 +1,5 @@
 import React, { Component } from 'react'
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Col
-} from 'reactstrap'
+import { Button, Form, FormGroup, Label, Input, Col } from 'reactstrap'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import cookies from '../cookies'
@@ -15,14 +8,15 @@ class Login extends Component {
   state = {
     email: '',
     password: '',
-    loggedIn: false
+    loggedIn: false,
   }
 
   login = () => {
-    axios.post('http://localhost:4000/login', {
-      email: this.state.email,
-      password: this.state.password
-    })
+    axios
+      .post('http://localhost:4000/login', {
+        email: this.state.email,
+        password: this.state.password,
+      })
       .then(res => {
         cookies.setCookie('session', res.data)
         this.setState({ loggedIn: true })
@@ -35,12 +29,12 @@ class Login extends Component {
 
   handleChange = event => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     })
   }
 
-  render () {
-    if (this.state.loggedIn) return (<Redirect to='/myswaps' />)
+  render() {
+    if (this.state.loggedIn) return <Redirect to="/myswaps" />
 
     return (
       <div className="login">
@@ -53,7 +47,8 @@ class Login extends Component {
               name="email"
               id="inputEmail"
               placeholder="with a placeholder"
-              onChange={this.handleChange} />
+              onChange={this.handleChange}
+            />
           </FormGroup>
           <FormGroup>
             <Label for="inputPassword">Password</Label>
@@ -62,11 +57,14 @@ class Login extends Component {
               name="password"
               id="inputPassword"
               placeholder="password placeholder"
-              onChange={this.handleChange} />
+              onChange={this.handleChange}
+            />
           </FormGroup>
           <FormGroup>
             <Col className="text-right">
-              <Button id='login-button' onClick={this.login}>Login</Button>
+              <Button id="login-button" onClick={this.login}>
+                Login
+              </Button>
             </Col>
           </FormGroup>
         </Form>

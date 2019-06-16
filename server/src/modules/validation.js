@@ -1,9 +1,8 @@
-
-function validUser (user) {
+function validUser(user) {
   return validEmail(user.email) && validPassword(user.password)
 }
 
-function validEmail (email) {
+function validEmail(email) {
   return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)
 }
 
@@ -14,7 +13,4 @@ const validPassword = password => {
   return true
 }
 
-module.exports =
-{ validUser,
-  validEmail,
-  validPassword }
+module.exports = { validUser, validEmail, validPassword }

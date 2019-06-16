@@ -27,13 +27,15 @@ app.post('/logout', (req, res) => {
   })
 })
 
-app.post('/login', (req, res) => { // ?
+app.post('/login', (req, res) => {
+  // ?
   db.loginUser(req.body.email, req.body.password, (error, result) => {
     if (error) return res.status(error).send(result)
     return res.send(result)
   })
 })
-app.get('/who-am-i', (req, res) => { // ?
+app.get('/who-am-i', (req, res) => {
+  // ?
   db.whoAmI(req.headers.authorization, (err, email) => {
     if (err) return res.status(err).send(email)
     return res.send(email)
@@ -67,7 +69,8 @@ app.get('/my-swaps', (req, res) => {
   })
 })
 
-app.post('/check-session', (req, res) => { // ?
+app.post('/check-session', (req, res) => {
+  // ?
   db.checkSession(req.body.session, session => {
     return res.send(session)
   })

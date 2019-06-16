@@ -7,43 +7,51 @@ import { Link } from 'react-router-dom'
 class SwapList extends Component {
   state = {
     swaps: [],
-    session: ''
+    session: '',
   }
 
   componentDidMount = () => {
-    this.setState({
-      session: cookies.getSession()
-    }, () => {
-      axios.get('http://localhost:4000/my-swaps', {
-        headers: {
-          Authorization: this.state.session
-        }
-      })
-        .then(res => {
-          this.setState({
-            swaps: res.data
+    this.setState(
+      {
+        session: cookies.getSession(),
+      },
+      () => {
+        axios
+          .get('http://localhost:4000/my-swaps', {
+            headers: {
+              Authorization: this.state.session,
+            },
           })
-        })
-        .catch(error => {
-          console.error(error)
-        })
-    })
+          .then(res => {
+            this.setState({
+              swaps: res.data,
+            })
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      }
+    )
   }
-  render () {
+  render() {
     const swaps = this.state.swaps
 
     if (!swaps || swaps.length === 0) {
       return (
         <div>
           <h3>No swaps found :(</h3>
-          <p>try adding items to your <Link to='/addwishlist'>wishlist</Link>!</p>
+          <p>
+            try adding items to your <Link to="/addwishlist">wishlist</Link>!
+          </p>
         </div>
       )
     }
 
     return (
-      <div className='Swaplist' >
-        {swaps.map(s => <Swap key={s.key} swap={s} />)}
+      <div className="Swaplist">
+        {swaps.map(s => (
+          <Swap key={s.key} swap={s} />
+        ))}
       </div>
     )
   }

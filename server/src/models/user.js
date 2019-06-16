@@ -5,18 +5,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 8,
-    trim: true
+    trim: true,
   },
   email: {
     type: String,
     required: true,
     minlength: 1,
-    trim: true
+    trim: true,
   },
   userWants: {
     type: Array,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const User = mongoose.model('User', userSchema)

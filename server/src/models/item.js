@@ -5,18 +5,18 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 1,
-    trim: true
+    trim: true,
   },
   description: {
-    type: String
+    type: String,
   },
   imgurl: {
-    type: String
+    type: String,
   },
   email: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const Item = mongoose.model('Item', itemSchema)

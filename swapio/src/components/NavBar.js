@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Link
-} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
   Collapse,
   Navbar,
@@ -11,7 +10,7 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
 } from 'reactstrap'
 
 import axios from 'axios'
@@ -22,7 +21,7 @@ class NavBar extends Component {
     session: cookies.getSession(),
     email: '',
     isOpen: false,
-    logoutHappened: false
+    logoutHappened: false,
   }
 
   componentWillReceiveProps = () => this.checkSession()
@@ -36,36 +35,42 @@ class NavBar extends Component {
     const session = cookies.getSession()
     this.setState({ session: session })
 
-    axios.post('http://localhost:4000/check-session', {
-      session: session
-    }).then(res => {
-      if (!res.data) {
-        this.deleteSessionData()
-      } else {
-        axios.get('http://localhost:4000/who-am-i', {
-          headers: {
-            Authorization: this.state.session
-          }
-        }).then(res => {
-          this.setState({
-            email: res.data
-          })
-        })
-      }
-    })
+    axios
+      .post('http://localhost:4000/check-session', {
+        session: session,
+      })
+      .then(res => {
+        if (!res.data) {
+          this.deleteSessionData()
+        } else {
+          axios
+            .get('http://localhost:4000/who-am-i', {
+              headers: {
+                Authorization: this.state.session,
+              },
+            })
+            .then(res => {
+              this.setState({
+                email: res.data,
+              })
+            })
+        }
+      })
   }
 
   logout = () => {
-    axios.post('http://localhost:4000/logout', {
-      session: this.state.session
-    }).then(() => {
-      this.deleteSessionData()
-    })
+    axios
+      .post('http://localhost:4000/logout', {
+        session: this.state.session,
+      })
+      .then(() => {
+        this.deleteSessionData()
+      })
   }
 
   toggle = () => this.setState({ isOpen: !this.state.isOpen })
 
-  render () {
+  render() {
     return (
       <div>
         <Navbar color="light" light expand="md">
@@ -73,39 +78,30 @@ class NavBar extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              {!this.state.session
-                ? <NavItem>
-
-                </NavItem>
-                : <UncontrolledDropdown nav inNavbar>
+              {!this.state.session ? (
+                <NavItem></NavItem>
+              ) : (
+                <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
-                    <span id='navbar-email'>{this.state.email}</span>
+                    <span id="navbar-email">{this.state.email}</span>
                   </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem>
-                      <Link to='/addItem'>
-                        Add Item
-                      </Link>
+                      <Link to="/addItem">Add Item</Link>
                     </DropdownItem>
                     <DropdownItem>
-                      <Link to="/addwishlist">
-                        Add items to wishlist
-                      </Link>
+                      <Link to="/addwishlist">Add items to wishlist</Link>
                     </DropdownItem>
                     <DropdownItem>
-                      <Link to='/myswaps'>
-                        View Swap Matches
-                      </Link>
+                      <Link to="/myswaps">View Swap Matches</Link>
                     </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem onClick={this.logout}>
-                      <Link to="/">
-                        Logout
-                      </Link>
+                      <Link to="/">Logout</Link>
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
-              }
+              )}
             </Nav>
           </Collapse>
         </Navbar>

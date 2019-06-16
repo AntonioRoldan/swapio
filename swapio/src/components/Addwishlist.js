@@ -1,12 +1,5 @@
 import React, { Component } from 'react'
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Col
-} from 'reactstrap'
+import { Button, Form, FormGroup, Label, Input, Col } from 'reactstrap'
 import axios from 'axios'
 import cookies from '../cookies'
 
@@ -15,12 +8,12 @@ class Addwishlist extends Component {
     wishlist: '',
     dbWishlist: [],
     email: '',
-    session: ''
+    session: '',
   }
 
   handleChange = event => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     })
   }
 
@@ -32,18 +25,24 @@ class Addwishlist extends Component {
   }
 
   addToWishlist = () => {
-    const wishlist = this.state.wishlist
-      .split(',')
-      .map(x => x.trim())
-      .filter(x => x) || []
+    const wishlist =
+      this.state.wishlist
+        .split(',')
+        .map(x => x.trim())
+        .filter(x => x) || []
 
-    axios.post('http://localhost:4000/add-wishlist', {
-      items: wishlist
-    }, {
-      headers: {
-        Authorization: this.state.session
-      }
-    })
+    axios
+      .post(
+        'http://localhost:4000/add-wishlist',
+        {
+          items: wishlist,
+        },
+        {
+          headers: {
+            Authorization: this.state.session,
+          },
+        }
+      )
       .then(res => {
         console.log(res)
         this.setState({ dbWishlist: res.data })
@@ -53,27 +52,33 @@ class Addwishlist extends Component {
       })
   }
 
-  render () {
+  render() {
     return (
       <div>
         <Form>
           <FormGroup>
             <Label for="wishlist">Title</Label>
-            <Input type="text"
+            <Input
+              type="text"
               name="wishlist"
               id="input-wishlist"
               placeholder="Type in your wanted items separated by commas"
-              onChange={this.handleChange} />
+              onChange={this.handleChange}
+            />
           </FormGroup>
           <FormGroup>
             <Col className="text-right">
-              <Button id="addWishlist" onClick={this.addToWishlist}>Add to your wishlist</Button>
+              <Button id="addWishlist" onClick={this.addToWishlist}>
+                Add to your wishlist
+              </Button>
             </Col>
           </FormGroup>
         </Form>
         <br />
         <ul id="dbwishlist">
-          {this.state.dbWishlist.map((item, i) => (<li key={i}>{item}</li>))}
+          {this.state.dbWishlist.map((item, i) => (
+            <li key={i}>{item}</li>
+          ))}
         </ul>
       </div>
     )

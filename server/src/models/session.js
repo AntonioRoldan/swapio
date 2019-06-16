@@ -5,17 +5,17 @@ const sessionSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 1,
-    trim: true
+    trim: true,
   },
   APIkey: {
     type: String,
     required: true,
-    minlength: 10
+    minlength: 10,
   },
   expiry: {
     type: Date,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const Session = mongoose.model('Session', sessionSchema)

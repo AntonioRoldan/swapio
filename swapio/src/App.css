@@ -1,5 +1,4 @@
 .App {
-
 }
 
 .App-logo {
@@ -26,6 +25,6 @@
   margin: auto;
 }
 
-.home > Button {
+.home > button {
   margin: 10px;
 }

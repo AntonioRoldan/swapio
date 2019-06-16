@@ -18,11 +18,7 @@
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
-    "lint": "npx eslint .",
-    "lint-fix": "npx eslint . --fix"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "format": "prettier --write *.js src/**/*.{js,jsx,css}"
   },
   "browserslist": [
     ">0.2%",
@@ -31,14 +27,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.9.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^8.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-react": "^7.11.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "puppeteer": "^1.11.0"
+    "prettier": "^1.18.2"
   }
 }

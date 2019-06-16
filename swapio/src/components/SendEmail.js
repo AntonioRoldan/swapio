@@ -1,11 +1,5 @@
 import React, { Component } from 'react'
-import {
-  Button,
-  Form,
-  FormGroup,
-  Input,
-  Col
-} from 'reactstrap'
+import { Button, Form, FormGroup, Input, Col } from 'reactstrap'
 import axios from 'axios'
 import cookies from '../cookies'
 
@@ -13,25 +7,30 @@ class SendEmail extends Component {
   state = {
     session: '',
     message: '',
-    toUserId: ''
+    toUserId: '',
   }
 
   componentDidMount = () => {
     this.setState({
       session: cookies.getSession(),
-      toUserId: this.props.toUserId
+      toUserId: this.props.toUserId,
     })
   }
   sendEmail = () => {
     console.log('this.state :', this.state)
-    axios.post('http://localhost:4000/send-message', {
-      to: this.state.toUserId,
-      message: this.state.message
-    }, {
-      headers: {
-        Authorization: this.state.session
-      }
-    })
+    axios
+      .post(
+        'http://localhost:4000/send-message',
+        {
+          to: this.state.toUserId,
+          message: this.state.message,
+        },
+        {
+          headers: {
+            Authorization: this.state.session,
+          },
+        }
+      )
       .then(res => {
         console.log('res :', res)
       })
@@ -42,20 +41,21 @@ class SendEmail extends Component {
 
   handleChange = event => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     })
   }
 
-  render () {
+  render() {
     return (
       <Form className="mt-3">
         <FormGroup>
           <Input
-            type='textarea'
-            placeholder='Write your message'
-            id='message'
-            name='message'
-            onChange={this.handleChange} />
+            type="textarea"
+            placeholder="Write your message"
+            id="message"
+            name="message"
+            onChange={this.handleChange}
+          />
         </FormGroup>
         <FormGroup>
           <Col className="text-right">
